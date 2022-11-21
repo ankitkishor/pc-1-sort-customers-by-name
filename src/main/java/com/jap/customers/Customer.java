@@ -1,11 +1,13 @@
 package com.jap.customers;
 
-public class Customer {
-private int customerId;
-private String customerName;
-private String customerGender;
-private boolean isSeniorCitizen;
-private String city;
+import java.util.Objects;
+
+public class Customer implements Comparable<Customer> {
+    private int customerId;
+    private String customerName;
+    private String customerGender;
+    private boolean isSeniorCitizen;
+    private String city;
 
     public Customer(int customerId, String customerName, String customerGender, boolean isSeniorCitizen, String city) {
         this.customerId = customerId;
@@ -55,9 +57,34 @@ private String city;
         this.city = city;
     }
 
-    @Override
-    public String toString() {
-        return "";
+    public Customer() {
     }
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", customerName='" + customerName + '\'' +
+                ", customerGender='" + customerGender + '\'' +
+                ", isSeniorCitizen=" + isSeniorCitizen +
+                ", city='" + city + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return getCustomerId() == customer.getCustomerId() && isSeniorCitizen() == customer.isSeniorCitizen() && Objects.equals(getCustomerName(), customer.getCustomerName()) && Objects.equals(getCustomerGender(), customer.getCustomerGender()) && Objects.equals(getCity(), customer.getCity());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCustomerId(), getCustomerName(), getCustomerGender(), isSeniorCitizen(), getCity());
+    }
+
+    public int compareTo(Customer customer) {
+        return String.CASE_INSENSITIVE_ORDER.compare(this.getCustomerName(), customer.getCustomerName());
+    }
 }
